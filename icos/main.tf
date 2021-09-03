@@ -9,12 +9,10 @@ resource "ibm_resource_instance" "cos_instance" {
   location          = "global"
 }
 
-resource "ibm_cos_bucket" "backet" {
+resource "ibm_cos_bucket" "bucket" {
   bucket_name           = var.bucket_name
   resource_instance_id  = ibm_resource_instance.cos_instance.id
-  cross_region_location	= var.cross_regional_loc
   bucket_type		= "cross_region_location"
-  bucket_region		= var.bucket_region
   storage_class         = var.storage
   hard_quota            = var.quota
 }

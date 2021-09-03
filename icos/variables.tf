@@ -18,16 +18,12 @@ variable "region" {
   default = "ap"
 }
 
-variable "bucket_region" {
-  default = "jp-osa"
-}
-
 variable "regional_loc" {
   default = "jp-osa"
 }
 
-variable "cross_regional_loc" {
-  default = "ap-geo"
+variable "single_site_loc" {
+  default = ""
 }
 
 variable "quota" {
