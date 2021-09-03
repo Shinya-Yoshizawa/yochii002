@@ -12,7 +12,6 @@ resource "ibm_resource_instance" "cos_instance" {
 resource "ibm_cos_bucket" "bucket" {
   bucket_name           = var.bucket_name
   resource_instance_id  = ibm_resource_instance.cos_instance.id
-  bucket_type		= "cross_region_location"
   storage_class         = var.storage
   hard_quota            = var.quota
 }
