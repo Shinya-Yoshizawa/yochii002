@@ -12,8 +12,9 @@ resource "ibm_resource_instance" "cos_instance" {
 resource "ibm_cos_bucket" "backet" {
   bucket_name           = var.bucket_name
   resource_instance_id  = ibm_resource_instance.cos_instance.id
-#  single_site_location  = var.single_site_loc
-  region_location	= var.regional_loc
+  cross_region_location	= var.cross_regional_loc
+  bucket_type		= "cross_region_location"
+  bucket_region		= var.bucket_region
   storage_class         = var.storage
   hard_quota            = var.quota
   static_web_service	= "1"
