@@ -22,6 +22,10 @@ variable "region" {
 #  default = "tor01"
 #}
 
+variable "regional_loc" {
+  default = "jp-osa"
+}
+
 variable "quota" {
   default = "0"
 }
