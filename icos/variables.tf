@@ -18,12 +18,8 @@ variable "region" {
   default = "ap"
 }
 
-variable "regional_loc" {
+variable "region_location" {
   default = "jp-osa"
-}
-
-variable "single_site_loc" {
-  default = ""
 }
 
 variable "quota" {

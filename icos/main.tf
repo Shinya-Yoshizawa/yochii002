@@ -11,6 +11,7 @@ resource "ibm_resource_instance" "cos_instance" {
 
 resource "ibm_cos_bucket" "bucket" {
   bucket_name           = var.bucket_name
+  region_location	= var.region_location
   resource_instance_id  = ibm_resource_instance.cos_instance.id
   storage_class         = var.storage
   hard_quota            = var.quota
