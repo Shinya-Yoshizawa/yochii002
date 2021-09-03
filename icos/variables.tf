@@ -11,7 +11,7 @@ variable "resource_group_name" {
 }
 
 variable "storage" {
-  default = "smart tier"
+  default = "smart"
 }
 
 variable "region" {
@@ -19,7 +19,7 @@ variable "region" {
 }
 
 variable "single_site_loc" {
-  default = "jp-osa"
+  default = "sjc04"
 }
 
 variable "quota" {
