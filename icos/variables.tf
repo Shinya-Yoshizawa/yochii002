@@ -18,9 +18,9 @@ variable "region" {
   default = "ap"
 }
 
-variable "single_site_loc" {
-  default = "sjc04"
-}
+#variable "single_site_loc" {
+#  default = "tor01"
+#}
 
 variable "quota" {
   default = "0"
