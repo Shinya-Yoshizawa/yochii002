@@ -17,6 +17,5 @@ resource "ibm_cos_bucket" "backet" {
   bucket_region		= var.bucket_region
   storage_class         = var.storage
   hard_quota            = var.quota
-  static_web_service	= "1"
 }
 
