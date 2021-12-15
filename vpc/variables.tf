@@ -1,9 +1,13 @@
 variable "zone1" {
-  default = "us-south-1"
+  default = "dev-kd-jp-osa-zone1"
 }
 
 variable "zone2" {
-  default = "us-south-2"
+  default = "dev-kd-jp-osa-zone2"
+}
+
+variable "zone3" {
+  default = "dev-kd-jp-osa-zone3"
 }
 
 variable "ssh_public_key" {
@@ -27,5 +31,5 @@ variable "image_operating_system" {
 }
 
 variable "cidr1" {
-  default = "10.120.0.0/24"
+  default = "10.248.0.0/18"
 }
