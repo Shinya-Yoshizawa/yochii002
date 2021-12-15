@@ -1,8 +1,9 @@
 resource "ibm_is_vpc" "vpc1" {
   name = var.vpc_name
-  resource_name = var.vpc_name
   resource_group = var.resource_group
-  security_group = var.security_group
+  default_network_acl = var.network_acl
+  default_routing_table = var.routing_table
+  default_security_group = var.security_group
 }
 
 resource "ibm_is_vpc_address_prefix" "sabnet_prefix" {

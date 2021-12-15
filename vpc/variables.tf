@@ -23,5 +23,13 @@ variable "resource_group" {
 }
 
 variable "security_group" {
-  default = "dev-kd-jp-osa-security-01"
+  default = "dev-kd-jp-osa-security_group-01"
+}
+
+variable "network_acl" {
+  default = "dev-kd-jp-osa-network_acl-01"
+}
+
+variable "routing_table" {
+  default = "dev-kd-jp-osa-routing_table-01"
 }
