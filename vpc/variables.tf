@@ -33,3 +33,7 @@ variable "image_operating_system" {
 variable "cidr1" {
   default = "10.248.0.0/18"
 }
+
+variable "resource_group" {
+  default = "dev-costomer-direct"
+}
