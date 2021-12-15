@@ -1,6 +1,8 @@
 resource "ibm_is_vpc" "vpc1" {
-  name = "dev-kd-jp-osa-vpc-01"
+  name = var.vpc_name
+  resource_name = var.vpc_name
   resource_group = var.resource_group
+  security_group = var.security_group
 }
 
 resource "ibm_is_vpc_address_prefix" "sabnet_prefix" {
