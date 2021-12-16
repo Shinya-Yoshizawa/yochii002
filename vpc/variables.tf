@@ -34,15 +34,19 @@ variable "routing_table" {
   default = "dev-kd-jp-osa-routing_table-01"
 }
 
-variable "zone1_subnet_prefix_name" {
+variable "subnet_name" {
   default = "dev-kd-jp-osa-subnet"
+}
+
+variable "zone1_subnet_prefix_name" {
+  default = "dev-kd-jp-osa-subnet-zone1"
 }
 
 variable "zone2_subnet_prefix_name" {
-  default = "dev-kd-jp-osa-subnet"
+  default = "dev-kd-jp-osa-subnet-zone2"
 }
 
 variable "zone3_subnet_prefix_name" {
-  default = "dev-kd-jp-osa-subnet"
+  default = "dev-kd-jp-osa-subnet-zone3"
 }
 
