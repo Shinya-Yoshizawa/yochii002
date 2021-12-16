@@ -33,3 +33,16 @@ variable "network_acl" {
 variable "routing_table" {
   default = "dev-kd-jp-osa-routing_table-01"
 }
+
+variable "zone1_subnet_prefix_name" {
+  default = "dev-kd-jp-osa-subnet"
+}
+
+variable "zone2_subnet_prefix_name" {
+  default = "dev-kd-jp-osa-subnet"
+}
+
+variable "zone3_subnet_prefix_name" {
+  default = "dev-kd-jp-osa-subnet"
+}
+

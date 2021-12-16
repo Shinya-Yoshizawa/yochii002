@@ -1,17 +1,29 @@
 resource "ibm_is_vpc" "vpc1" {
   name = var.vpc_name
   resource_group = var.resource_group
-  default_network_acl = var.network_acl
-  default_routing_table = var.routing_table
-  default_security_group = var.security_group
+  
 }
 
-resource "ibm_is_vpc_address_prefix" "sabnet_prefix" {
-  name        = "dev-kd-jp-osa-subnet"
+resource "ibm_is_vpc_address_prefix" "zone1_sabnet_prefix" {
+  name        = var.zone1_subnet_prefix_name
   zone        = var.zone1
   vpc         = ibm_is_vpc.vpc1.id
 	cidr        = var.cidr1
 	is_default  = true
+}
+
+resource "ibm_is_vpc_address_prefix" "zone2_sabnet_prefix" {
+  name        = var.zone2_subnet_prefix_name
+  zone        = var.zone2
+  vpc         = ibm_is_vpc.vpc1.id
+	cidr        = var.cidr1
+}
+
+resource "ibm_is_vpc_address_prefix" "zone3_sabnet_prefix" {
+  name        = var.zone3_subnet_prefix_name
+  zone        = var.zone3
+  vpc         = ibm_is_vpc.vpc1.id
+	cidr        = var.cidr1
 }
 
 resource "ibm_is_vpc_route" "route" {

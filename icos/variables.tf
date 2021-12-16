@@ -1,9 +1,9 @@
 variable "cos_instance_name" {
-  default = "yoshizawa-icos-poc"
+  default = "sample-icos-poc"
 }
 
 variable "bucket_name" {
-  default = "yoshizawa-icos-poc-webservice"
+  default = "sample-icos-poc"
 }
 
 variable "resource_group_name" {
