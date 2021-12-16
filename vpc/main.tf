@@ -37,7 +37,7 @@ resource "ibm_is_vpc_route" "route" {
 resource "ibm_is_subnet" "subnet1" {
   name            = var.subnet_name
   vpc             = ibm_is_vpc.vpc1.id
-  zone            = [var.zone1 var.zone2 var.zone3]
+  zone            = [var.zone1,var.zone2,var.zone3]
   ipv4_cidr_block = "10.248.0.0/28"
 }
 
