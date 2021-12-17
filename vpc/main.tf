@@ -19,8 +19,28 @@ resource ibm_is_vpc vpc {
 # Update default security group
 locals {
   # Convert to object
+  security_group_rules = [
+    {
+      name      = "allow-inbound-ping"
+      direction = "inbound"
+      remote    = "0.0.0.0/0"
+      icmp      = {
+        type = 8
+      }
+    },
+    {
+      name      = "allow-inbound-ssh"
+      direction = "inbound"
+      remote    = "0.0.0.0/0"
+      tcp       = {
+        port_min = 22
+        port_max = 22
+      }
+    },
+  ]
   security_group_rule_object = {
-    for rule in var.security_group_rules:
+#    for rule in var.security_group_rules:
+    for rule in security_group_rules:
     rule.name => rule
   }
 }
@@ -58,9 +78,15 @@ resource ibm_is_security_group_rule default_vpc_rule {
 
 # Public Gateways (Optional)
 locals {
+  use_public_gateways = {
+    zone-1 = true
+    zone-2 = true
+    zone-3 = true
+  }
   # create object that only contains gateways that will be created
   gateway_object = {
-    for zone in keys(var.use_public_gateways):
+  #  for zone in keys(var.use_public_gateways):
+    for zone in keys(use_public_gateways):
       zone => "${var.region}-${index(keys(var.use_public_gateways), zone) + 1}" if var.use_public_gateways[zone]
   }
 }
@@ -88,7 +114,30 @@ module subnets {
   region            = var.region 
   prefix            = var.prefix                  
   acl_id            = ibm_is_network_acl.multizone_acl.id
-  subnets           = var.subnets
+#  subnets           = var.subnets
+  subnets = {
+    zone-1 = [
+      {
+        name           = "dev-kd-jp-osa-zone1"
+        cidr           = "10.10.10.0/24"
+        public_gateway = true
+      }
+    ],
+    zone-2 = [
+      {
+        name           = "dev-kd-jp-osa-zone2"
+        cidr           = "10.20.10.0/24"
+        public_gateway = true
+      }
+    ],
+    zone-3 = [
+      {
+        name           = "dev-kd-jp-osa-zone3"
+        cidr           = "10.30.10.0/24"
+        public_gateway = true
+      }
+    ]
+  }
   vpc_id            = ibm_is_vpc.vpc.id
   resource_group_id = data.ibm_resource_group.resource_group.id
   public_gateways   = local.public_gateways

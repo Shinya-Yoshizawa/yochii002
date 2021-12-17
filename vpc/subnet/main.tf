@@ -1,18 +1,41 @@
 locals {
+  subnets = {
+    zone-1 = [{
+      name           = "dev-kd-jp-osa-zone1"
+      cidr           = "10.10.10.0/24"
+      public_gateway = true
+    }],
+    zone-2 = [{
+      name           = "dev-kd-jp-osa-zone2"
+      cidr           = "10.20.10.0/24"
+      public_gateway = true
+    }],
+    zone-3 = [{
+      name           = "dev-kd-jp-osa-zone3"
+      cidr           = "10.30.10.0/24"
+      public_gateway = true
+    }]
+  }
+
   # Convert subnets into a single list
   subnet_list         = flatten([
     # For each key in the object create an array
-    for zone in keys(var.subnets):
+    #for zone in keys(var.subnets):
+    for zone in keys(subnets):
     # Each item in the list contains information about a single subnet
     [
-      for value in var.subnets[zone]:
+      #for value in var.subnets[zone]:
+      for value in subnets[zone]:
       {
         name           = value.name
         prefix_name    = "${var.prefix}-${value.name}"
-        zone           = index(keys(var.subnets), zone) + 1                     # Zone 1, 2, or 3
-        zone_name      = "${var.region}-${index(keys(var.subnets), zone) + 1}"  # Contains region and zone
+        #zone           = index(keys(var.subnets), zone) + 1                     # Zone 1, 2, or 3
+        zone           = index(keys(subnets), zone) + 1                     # Zone 1, 2, or 3
+        #zone_name      = "${var.region}-${index(keys(var.subnets), zone) + 1}"  # Contains region and zone
+        zone_name      = "${var.region}-${index(keys(subnets), zone) + 1}"  # Contains region and zone
         cidr           = value.cidr
-        count          = index(var.subnets[zone], value) + 1                    # Count of the subnet within the zone
+        #count          = index(var.subnets[zone], value) + 1                    # Count of the subnet within the zone
+        count          = index(subnets[zone], value) + 1                    # Count of the subnet within the zone
         public_gateway = value.public_gateway
       }
     ]
@@ -25,9 +48,16 @@ locals {
   }
 
   # List of public gateways
+  public_gateways = {
+    zone-1 = ""
+    zone-2 = ""
+    zone-3 = ""
+  }
   public_gateway_list = [
-    for gateway in keys(var.public_gateways):
-    var.public_gateways[gateway] == "" ? null : var.public_gateways[gateway]
+    #for gateway in keys(var.public_gateways):
+    #var.public_gateways[gateway] == "" ? null : var.public_gateways[gateway]
+    for gateway in keys(public_gateways):
+    public_gateways[gateway] == "" ? null : public_gateways[gateway]
   ]
 
 }
