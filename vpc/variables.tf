@@ -14,7 +14,7 @@ variable "vpc_name" {
 variable resource_group {
     description = "Name of resource group where all infrastructure will be provisioned"
     type        = string
-    default = "dev-costomer-direct"
+    default = "dev-customer-direct"
 }
 
 # Prefix
