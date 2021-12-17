@@ -109,38 +109,88 @@ locals {
   }
 }
 
-module subnets {
-  source            = "./subnet" 
-  region            = var.region 
-  prefix            = var.prefix                  
-  acl_id            = ibm_is_network_acl.multizone_acl.id
-#  subnets           = var.subnets
-  subnets = {
-    zone-1 = [
-      {
-        name           = "dev-kd-jp-osa-zone1"
-        cidr           = "10.10.10.0/24"
-        public_gateway = true
-      }
-    ],
-    zone-2 = [
-      {
-        name           = "dev-kd-jp-osa-zone2"
-        cidr           = "10.20.10.0/24"
-        public_gateway = true
-      }
-    ],
-    zone-3 = [
-      {
-        name           = "dev-kd-jp-osa-zone3"
-        cidr           = "10.30.10.0/24"
-        public_gateway = true
-      }
-    ]
-  }
-  vpc_id            = ibm_is_vpc.vpc.id
-  resource_group_id = data.ibm_resource_group.resource_group.id
-  public_gateways   = local.public_gateways
+# Subnet Prefix
+resource ibm_is_vpc_address_prefix subnet_prefix_1 {
+  zone     = 1
+  name     = "dev-kd-jp-osa-zone1"
+  vpc      = ibm_is_vpc.vpc.id
+  cidr     = "10.10.10.0/24"
 }
+resource ibm_is_vpc_address_prefix subnet_prefix_2 {
+  zone     = 1
+  name     = "dev-kd-jp-osa-zone2"
+  vpc      = ibm_is_vpc.vpc.id
+  cidr     = "10.10.20.0/24"
+}
+resource ibm_is_vpc_address_prefix subnet_prefix_3 {
+  zone     = 1
+  name     = "dev-kd-jp-osa-zone3"
+  vpc      = ibm_is_vpc.vpc.id
+  cidr     = "10.10.30.0/24"
+}
+
+resource ibm_is_subnet subnet_1 {
+  vpc               = var.vpc_id
+  name              = "zone-1"
+  zone              = "dev-kd-jp-osa-zone1"
+  resource_group_id = data.ibm_resource_group.resource_group.id
+  ipv4_cidr_block   = subnet_prefix_1.cidr
+  network_acl       = ibm_is_network_acl.multizone_acl.id
+  routing_table     = null
+}
+
+resource ibm_is_subnet subnet_2 {
+  vpc               = var.vpc_id
+  name              = "zone-2"
+  zone              = "dev-kd-jp-osa-zone2"
+  resource_group_id = data.ibm_resource_group.resource_group.id
+  ipv4_cidr_block   = subnet_prefix_2.cidr
+  network_acl       = ibm_is_network_acl.multizone_acl.id
+  routing_table     = null
+}
+
+resource ibm_is_subnet subnet_3 {
+  vpc               = var.vpc_id
+  name              = "zone-3"
+  zone              = "dev-kd-jp-osa-zone3"
+  resource_group_id = data.ibm_resource_group.resource_group.id
+  ipv4_cidr_block   = subnet_prefix_3.cidr
+  network_acl       = ibm_is_network_acl.multizone_acl.id
+  routing_table     = null
+}
+
+#module subnets {
+#  source            = "./subnet" 
+#  region            = var.region 
+#  prefix            = var.prefix                  
+#  acl_id            = ibm_is_network_acl.multizone_acl.id
+##  subnets           = var.subnets
+#  subnets = {
+#    zone-1 = [
+#      {
+#        name           = "dev-kd-jp-osa-zone1"
+#        cidr           = "10.10.10.0/24"
+#        public_gateway = true
+#      }
+#    ],
+#    zone-2 = [
+#      {
+#        name           = "dev-kd-jp-osa-zone2"
+#        cidr           = "10.20.10.0/24"
+#        public_gateway = true
+#      }
+#    ],
+#    zone-3 = [
+#      {
+#        name           = "dev-kd-jp-osa-zone3"
+#        cidr           = "10.30.10.0/24"
+#        public_gateway = true
+#      }
+#    ]
+#  }
+#  vpc_id            = ibm_is_vpc.vpc.id
+#  resource_group_id = data.ibm_resource_group.resource_group.id
+#  public_gateways   = local.public_gateways
+#}
 
 
