@@ -134,10 +134,10 @@ resource ibm_is_subnet subnet_1 {
   name              = "zone-1"
   zone              = "dev-kd-jp-osa-zone1"
   resource_group_id = data.ibm_resource_group.resource_group.id
-  ipv4_cidr_block   = subnet_prefix_1.cidr
+#  ipv4_cidr_block   = subnet_prefix_1.cidr
+  ipv4_cidr_block   = "10.10.10.0/24"
   network_acl       = ibm_is_network_acl.multizone_acl.id
   routing_table     = null
-  cidr     = "10.10.10.0/24"
 }
 
 resource ibm_is_subnet subnet_2 {
@@ -145,10 +145,10 @@ resource ibm_is_subnet subnet_2 {
   name              = "zone-2"
   zone              = "dev-kd-jp-osa-zone2"
   resource_group_id = data.ibm_resource_group.resource_group.id
-  ipv4_cidr_block   = subnet_prefix_2.cidr
+#  ipv4_cidr_block   = subnet_prefix_2.cidr
+  ipv4_cidr_block   = "10.10.20.0/24"
   network_acl       = ibm_is_network_acl.multizone_acl.id
   routing_table     = null
-  cidr     = "10.10.20.0/24"
 }
 
 resource ibm_is_subnet subnet_3 {
@@ -156,10 +156,10 @@ resource ibm_is_subnet subnet_3 {
   name              = "zone-3"
   zone              = "dev-kd-jp-osa-zone3"
   resource_group_id = data.ibm_resource_group.resource_group.id
-  ipv4_cidr_block   = subnet_prefix_3.cidr
+#  ipv4_cidr_block   = subnet_prefix_3.cidr
+  ipv4_cidr_block   = "10.10.30.0/24"
   network_acl       = ibm_is_network_acl.multizone_acl.id
   routing_table     = null
-  cidr     = "10.10.30.0/24"
 }
 
 #module subnets {
