@@ -109,25 +109,25 @@ locals {
   }
 }
 
-# Subnet Prefix
-resource ibm_is_vpc_address_prefix subnet_prefix_1 {
-  zone     = 1
-  name     = "dev-kd-jp-osa-zone1"
-  vpc      = ibm_is_vpc.vpc.id
-  cidr     = "10.10.10.0/24"
-}
-resource ibm_is_vpc_address_prefix subnet_prefix_2 {
-  zone     = 1
-  name     = "dev-kd-jp-osa-zone2"
-  vpc      = ibm_is_vpc.vpc.id
-  cidr     = "10.10.20.0/24"
-}
-resource ibm_is_vpc_address_prefix subnet_prefix_3 {
-  zone     = 1
-  name     = "dev-kd-jp-osa-zone3"
-  vpc      = ibm_is_vpc.vpc.id
-  cidr     = "10.10.30.0/24"
-}
+## Subnet Prefix
+#resource ibm_is_vpc_address_prefix subnet_prefix_1 {
+#  zone     = 1
+#  name     = "dev-kd-jp-osa-zone1"
+#  vpc      = ibm_is_vpc.vpc.id
+#  cidr     = "10.10.10.0/24"
+#}
+#resource ibm_is_vpc_address_prefix subnet_prefix_2 {
+#  zone     = 1
+#  name     = "dev-kd-jp-osa-zone2"
+#  vpc      = ibm_is_vpc.vpc.id
+#  cidr     = "10.10.20.0/24"
+#}
+#resource ibm_is_vpc_address_prefix subnet_prefix_3 {
+#  zone     = 1
+#  name     = "dev-kd-jp-osa-zone3"
+#  vpc      = ibm_is_vpc.vpc.id
+#  cidr     = "10.10.30.0/24"
+#}
 
 resource ibm_is_subnet subnet_1 {
   vpc               = var.vpc_id
@@ -137,6 +137,7 @@ resource ibm_is_subnet subnet_1 {
   ipv4_cidr_block   = subnet_prefix_1.cidr
   network_acl       = ibm_is_network_acl.multizone_acl.id
   routing_table     = null
+  cidr     = "10.10.10.0/24"
 }
 
 resource ibm_is_subnet subnet_2 {
@@ -147,6 +148,7 @@ resource ibm_is_subnet subnet_2 {
   ipv4_cidr_block   = subnet_prefix_2.cidr
   network_acl       = ibm_is_network_acl.multizone_acl.id
   routing_table     = null
+  cidr     = "10.10.20.0/24"
 }
 
 resource ibm_is_subnet subnet_3 {
@@ -157,6 +159,7 @@ resource ibm_is_subnet subnet_3 {
   ipv4_cidr_block   = subnet_prefix_3.cidr
   network_acl       = ibm_is_network_acl.multizone_acl.id
   routing_table     = null
+  cidr     = "10.10.30.0/24"
 }
 
 #module subnets {
@@ -192,5 +195,4 @@ resource ibm_is_subnet subnet_3 {
 #  resource_group_id = data.ibm_resource_group.resource_group.id
 #  public_gateways   = local.public_gateways
 #}
-
 
