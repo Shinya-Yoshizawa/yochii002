@@ -21,11 +21,6 @@ variable resource_group {
     description = "Name of resource group where all infrastructure will be provisioned"
     type        = string
     default = "dev-costomer-direct"
-
-    validation  {
-      error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
-      condition     = can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.resource_group))
-    }
 }
 
 # Prefix
@@ -33,11 +28,6 @@ variable prefix {
     description = "A unique identifier need to provision resources. Must begin with a letter"
     type        = string
     default     = "dev-kd-jp-osa-vpc-prefix"
-
-    validation  {
-      error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
-      condition     = can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.prefix))
-    }
 }
 
 # Classic Access flag
@@ -59,11 +49,6 @@ variable use_public_gateways {
     zone-1 = true
     zone-2 = true
     zone-3 = true
-  }
-
-  validation {
-      error_message = "Keys for `use_public_gateways` must be in the order `zone-1`, `zone-2`, `zone-3`."
-      condition     = keys(var.use_public_gateways)[0] == "zone-1" && keys(var.use_public_gateways)[1] == "zone-2" && keys(var.use_public_gateways)[2] == "zone-3"
   }
 }
 
@@ -109,11 +94,6 @@ variable subnets {
         public_gateway = true
       }
     ]
-  }
-
-  validation {
-      error_message = "Keys for `subnets` must be in the order `zone-1`, `zone-2`, `zone-3`."
-      condition     = keys(var.subnets)[0] == "zone-1" && keys(var.subnets)[1] == "zone-2" && keys(var.subnets)[2] == "zone-3"
   }
 }
 
@@ -167,61 +147,6 @@ variable acl_rules {
       source      = "0.0.0.0/0"
     }
   ]
-
-  validation {
-    error_message = "ACL rules can only have one of `icmp`, `udp`, or `tcp`."
-    condition     = length(distinct(
-      # Get flat list of results
-      flatten([
-        # Check through rules
-        for rule in var.acl_rules:
-        # Return true if there is more than one of `icmp`, `udp`, or `tcp`
-        true if length(
-          [
-            for type in ["tcp", "udp", "icmp"]:
-            true if rule[type] != null
-          ]
-        ) > 1
-      ])
-    )) == 0 # Checks for length. If all fields all correct, array will be empty
-  }
-
-  validation {
-    error_message = "ACL rule actions can only be `allow` or `deny`."
-    condition     = length(distinct(
-      flatten([
-        # Check through rules
-        for rule in var.acl_rules:
-        # Return false action is not valid
-        false if !contains(["allow", "deny"], rule.action)
-      ])
-    )) == 0
-  }
-
-  validation {
-    error_message = "ACL rule direction can only be `inbound` or `outbound`."
-    condition     = length(distinct(
-      flatten([
-        # Check through rules
-        for rule in var.acl_rules:
-        # Return false if direction is not valid
-        false if !contains(["inbound", "outbound"], rule.direction)
-      ])
-    )) == 0
-  }
-
-  validation {
-    error_message = "ACL rule names must match the regex pattern ^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$."
-    condition     = length(distinct(
-      flatten([
-        # Check through rules
-        for rule in var.acl_rules:
-        # Return false if direction is not valid
-        false if !can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", rule.name))
-      ])
-    )) == 0
-  }
-
 }
 
 # Security Groups
@@ -272,47 +197,5 @@ variable security_group_rules {
       }
     },
   ]
-
-  validation {
-    error_message = "Security group rules can only have one of `icmp`, `udp`, or `tcp`."
-    condition     = length(distinct(
-      # Get flat list of results
-      flatten([
-        # Check through rules
-        for rule in var.security_group_rules:
-        # Return true if there is more than one of `icmp`, `udp`, or `tcp`
-        true if length(
-          [
-            for type in ["tcp", "udp", "icmp"]:
-            true if rule[type] != null
-          ]
-        ) > 1
-      ])
-    )) == 0 # Checks for length. If all fields all correct, array will be empty
-  }  
-
-  validation {
-    error_message = "Security group rule direction can only be `inbound` or `outbound`."
-    condition     = length(distinct(
-      flatten([
-        # Check through rules
-        for rule in var.security_group_rules:
-        # Return false if direction is not valid
-        false if !contains(["inbound", "outbound"], rule.direction)
-      ])
-    )) == 0
-  }
-
-  validation {
-    error_message = "Security group rule names must match the regex pattern ^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$."
-    condition     = length(distinct(
-      flatten([
-        # Check through rules
-        for rule in var.security_group_rules:
-        # Return false if direction is not valid
-        false if !can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", rule.name))
-      ])
-    )) == 0
-  }
 }
 
