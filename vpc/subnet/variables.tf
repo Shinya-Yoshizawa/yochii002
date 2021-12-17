@@ -52,19 +52,6 @@ variable subnets {
       public_gateway = true
     }]
   }
-
-  validation {
-      error_message = "Keys for `subnets` must be in the order `zone-1`, `zone-2`, `zone-3`."
-      condition     = keys(var.subnets)[0] == "zone-1" && keys(var.subnets)[1] == "zone-2" && keys(var.subnets)[2] == "zone-3"
-  }
-}
-
-# Optional Subnet Creation Variables
-
-variable resource_group_id {
-  description = "Optional. Resource group ID"
-  type        = string
-  default     = null
 }
 
 variable public_gateways {
@@ -78,11 +65,6 @@ variable public_gateways {
     zone-1 = ""
     zone-2 = ""
     zone-3 = ""
-  }
-
-  validation {
-      error_message = "Keys for `subnets` must be in the order `zone-1`, `zone-2`, `zone-3`."
-      condition     = keys(var.public_gateways)[0] == "zone-1" && keys(var.public_gateways)[1] == "zone-2" && keys(var.public_gateways)[2] == "zone-3"
   }
 }
 
