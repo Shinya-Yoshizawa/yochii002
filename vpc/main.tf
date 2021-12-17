@@ -1,57 +1,97 @@
-resource "ibm_is_vpc" "vpc1" {
-  name = var.vpc_name
-  resource_group = var.resource_group
+# Parent Account IBM Cloud Provider
+provider ibm {
+    region                = var.region
+    ibmcloud_timeout      = 60
 }
 
-resource "ibm_is_vpc_address_prefix" "zone1" {
-  name        = var.zone1_subnet_prefix_name
-  zone        = var.zone1
-  vpc         = ibm_is_vpc.vpc1.id
-	cidr        = var.cidr1
-	is_default  = true
+# Resource Group where VPC will be created
+data ibm_resource_group resource_group {
+  name = var.resource_group
 }
 
-resource "ibm_is_vpc_address_prefix" "zone2" {
-  name        = var.zone2_subnet_prefix_name
-  zone        = var.zone2
-  vpc         = ibm_is_vpc.vpc1.id
-	cidr        = var.cidr1
+# Create a VPC
+resource ibm_is_vpc vpc {
+  name           = var.vpcname
+  resource_group = data.ibm_resource_group.resource_group.id
+  classic_access = var.classic_access
 }
 
-resource "ibm_is_vpc_address_prefix" "zone3" {
-  name        = var.zone3_subnet_prefix_name
-  zone        = var.zone3
-  vpc         = ibm_is_vpc.vpc1.id
-	cidr        = var.cidr1
+# Update default security group
+locals {
+  # Convert to object
+  security_group_rule_object = {
+    for rule in var.security_group_rules:
+    rule.name => rule
+  }
 }
 
-#resource "ibm_is_vpc_route" "route" {
-#  name        = "route1"
-#  vpc         = ibm_is_vpc.vpc1.id
-#  zone        = var.zone1
-#  destination = "192.168.0.0/24"
-#  next_hop    = "10.248.0.1"
-#  depends_on  = [ibm_is_subnet.subnet1]
-#}
+resource ibm_is_security_group_rule default_vpc_rule {
+  for_each  = local.security_group_rule_object
+  group     = ibm_is_vpc.vpc.default_security_group
+  direction = each.value.direction
+  remote    = each.value.remote
 
-resource "ibm_is_subnet" "subnet1" {
-  name            = var.subnet_name
-  vpc             = ibm_is_vpc.vpc1.id
-  zone            = ibm_is_vpc_address_prefix.zone1
-  ipv4_cidr_block = "10.248.0.0/28"
+  dynamic tcp { 
+    for_each = each.value.tcp == null ? [] : [each.value]
+    content {
+      port_min = each.value.tcp.port_min
+      port_max = each.value.tcp.port_max
+    }
+  }
+
+  dynamic udp { 
+    for_each = each.value.udp == null ? [] : [each.value]
+    content {
+      port_min = each.value.udp.port_min
+      port_max = each.value.udp.port_max
+    }
+  } 
+
+  dynamic icmp { 
+    for_each = each.value.icmp == null ? [] : [each.value]
+    content {
+      type = each.value.icmp.type
+      code = each.value.icmp.code
+    }
+  } 
 }
 
-resource "ibm_is_subnet" "subnet2" {
-  name            = var.subnet_name
-  vpc             = ibm_is_vpc.vpc1.id
-  zone            = ibm_is_vpc_address_prefix.zone2
-  ipv4_cidr_block = "10.248.48.0/28"
+# Public Gateways (Optional)
+locals {
+  # create object that only contains gateways that will be created
+  gateway_object = {
+    for zone in keys(var.use_public_gateways):
+      zone => "${var.region}-${index(keys(var.use_public_gateways), zone) + 1}" if var.use_public_gateways[zone]
+  }
 }
 
-resource "ibm_is_subnet" "subnet3" {
-  name            = var.subnet_name
-  vpc             = ibm_is_vpc.vpc1.id
-  zone            = ibm_is_vpc_address_prefix.zone3
-  ipv4_cidr_block = "10.248.96.0/28"
+resource ibm_is_public_gateway gateway {
+  for_each       = local.gateway_object
+  name           = "${var.prefix}-public-gateway-${each.key}"
+  vpc            = ibm_is_vpc.vpc.id
+  resource_group = data.ibm_resource_group.resource_group.id
+  zone           = each.value
 }
+
+# ZONE
+locals {
+  # Object to reference gateways
+  public_gateways = {
+    for zone in ["zone-1", "zone-2", "zone-3"]:
+    # If gateway is created, set to id, otherwise set to empty string
+    zone => contains(keys(local.gateway_object), zone) ? ibm_is_public_gateway.gateway[zone].id : ""
+  }
+}
+
+module subnets {
+  source            = "./subnet" 
+  region            = var.region 
+  prefix            = var.prefix                  
+  acl_id            = ibm_is_network_acl.multizone_acl.id
+  subnets           = var.subnets
+  vpc_id            = ibm_is_vpc.vpc.id
+  resource_group_id = data.ibm_resource_group.resource_group.id
+  public_gateways   = local.public_gateways
+}
+
 
