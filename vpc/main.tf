@@ -11,7 +11,7 @@ data ibm_resource_group resource_group {
 
 # Create a VPC
 resource ibm_is_vpc vpc {
-  name           = var.vpcname
+  name           = var.vpc_name
   resource_group = data.ibm_resource_group.resource_group.id
   classic_access = var.classic_access
 }
