@@ -17,10 +17,10 @@ resource ibm_is_vpc vpc {
 }
 
 # Default Security Group
-resource ibm_is_security_group sg_def {
-  name = var.default_security_group_name
-  vpc  = ibm_is_vpc.vpc.id
-}
+#resource ibm_is_security_group sg_def {
+#  name = var.default_security_group_name
+#  vpc  = ibm_is_vpc.vpc.id
+#}
 
 # Default Security Group Rule
 #resource ibm_is_security_group_rule sg_rule_tcp22 {
