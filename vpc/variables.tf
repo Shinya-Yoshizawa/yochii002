@@ -11,10 +11,10 @@ variable "vpc_name" {
 }
 
 # Security Group
-variable "default_security_group_name" {
-  type = string
-  default = "dev-kd-jp-osa-sg-default"
-}
+#variable "default_security_group_name" {
+#  type = string
+#  default = "dev-kd-jp-osa-sg-default"
+#}
 
 # Resource Group
 variable "resource_group" {
