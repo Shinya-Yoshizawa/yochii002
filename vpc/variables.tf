@@ -87,7 +87,7 @@ variable zone3_cidr {
 }
 
 # ZONE1 Subnet
-variable subnet_zone {
+variable subnet {
     type        = map
     default     = {
       "name" = "subnet1"
