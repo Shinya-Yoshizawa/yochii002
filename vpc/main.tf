@@ -15,3 +15,17 @@ resource ibm_is_vpc vpc {
   resource_group = data.ibm_resource_group.resource_group.id
   classic_access = var.classic_access
 }
+
+# Default Security Group
+resource ibm_is_security_group_rule default_vpc_rule {
+  group     = ibm_is_vpc.vpc.default_security_group
+  name = "allow-inbound-ssh"
+  direction = "inbound"
+  remote    = 0.0.0.0/0
+  dynamic tcp {
+    content {
+      port_min = 22
+      port_max = 22
+    }
+  }
+}
