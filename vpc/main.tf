@@ -73,7 +73,7 @@ resource "ibm_is_subnet" "vpc_subnet_zone1" {
   vpc             = ibm_is_vpc.vpc.id
   zone            = var.subnet.zone
   ipv4_cidr_block = var.subnet.cidr
-  routing_table   = ibm_is_vpc.vpc.routing_table  
+  routing_table   = ibm_is_vpc.vpc.default_routing_table  
 
   timeouts {
     create = "90m"
