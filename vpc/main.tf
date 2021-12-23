@@ -29,6 +29,7 @@ resource ibm_is_security_group_rule sg_rule_tcp22 {
     port_min = 22
     port_max = 22
   }
+  tags = var.tags
 }
 resource ibm_is_security_group_rule sg_rule_ping {
   group     = ibm_is_vpc.vpc.default_security_group
@@ -46,7 +47,7 @@ resource ibm_is_vpc_address_prefix vpc_address_zone1 {
   zone = "${var.region}-1"
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone1_cidr
-  is_default = true
+  is_default = false
 }
 
 resource ibm_is_vpc_address_prefix vpc_address_zone2 {
@@ -55,7 +56,7 @@ resource ibm_is_vpc_address_prefix vpc_address_zone2 {
   zone = "${var.region}-2"
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone2_cidr
-  is_default = true
+  is_default = false
 }
 
 resource ibm_is_vpc_address_prefix vpc_address_zone3 {
@@ -64,7 +65,7 @@ resource ibm_is_vpc_address_prefix vpc_address_zone3 {
   zone = "${var.region}-3"
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone3_cidr
-  is_default = true
+  is_default = false
 }
 
 
