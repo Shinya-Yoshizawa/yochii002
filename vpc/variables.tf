@@ -57,18 +57,30 @@ variable classic_access {
 }
 
 # ZONE1 PREFIX
+variable create_zone1_prefix {
+    type        = bool
+    default     = false
+}
 variable zone1_cidr {
     type        = string
     default     = "10.248.0.0/18"
 }
 
 # ZONE2 PREFIX
+variable create_zone2_prefix {
+    type        = bool
+    default     = false
+}
 variable zone2_cidr {
     type        = string
     default     = "10.248.64.0/18"
 }
 
 # ZONE3 PREFIX
+variable create_zone3_prefix {
+    type        = bool
+    default     = false
+}
 variable zone3_cidr {
     type        = string
     default     = "10.248.128.0/18"
