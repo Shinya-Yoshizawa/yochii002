@@ -43,6 +43,6 @@ resource ibm_is_security_group_rule sg_rule_ping {
 }
 resource ibm_is_security_group_rule sg_rule_egress {
   group     = ibm_is_security_group.sg_def.id
-  direction = "egress"
+  direction = "outbound"
   remote    = "0.0.0.0/0"
 }
