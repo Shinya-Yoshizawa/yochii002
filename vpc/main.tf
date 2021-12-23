@@ -14,17 +14,19 @@ resource ibm_is_vpc vpc {
   name           = var.vpc_name
   resource_group = data.ibm_resource_group.resource_group.id
   classic_access = var.classic_access
+  default_security_group_name = var.default_security_group_name
 }
 
 # Default Security Group
-resource ibm_is_security_group sg_def {
-  name = var.default_security_group_name
-  vpc  = ibm_is_vpc.vpc.id
-}
+#resource ibm_is_security_group sg_def {
+#  name = var.default_security_group_name
+#  vpc  = ibm_is_vpc.vpc.id
+#}
 
 # Default Security Group Rule
 resource ibm_is_security_group_rule sg_rule_tcp22 {
-  group     = ibm_is_security_group.sg_def.id
+#  group     = ibm_is_security_group.sg_def.id
+  group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
   remote    = "0.0.0.0/0"
   tcp {
@@ -33,7 +35,8 @@ resource ibm_is_security_group_rule sg_rule_tcp22 {
   }
 }
 resource ibm_is_security_group_rule sg_rule_ping {
-  group     = ibm_is_security_group.sg_def.id
+#  group     = ibm_is_security_group.sg_def.id
+  group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
   remote    = "0.0.0.0/0"
   icmp {
@@ -41,8 +44,8 @@ resource ibm_is_security_group_rule sg_rule_ping {
     code = 0
   }
 }
-resource ibm_is_security_group_rule sg_rule_egress {
-  group     = ibm_is_security_group.sg_def.id
-  direction = "outbound"
-  remote    = "0.0.0.0/0"
-}
+#resource ibm_is_security_group_rule sg_rule_egress {
+#  group     = ibm_is_security_group.sg_def.id
+#  direction = "outbound"
+#  remote    = "0.0.0.0/0"
+#}
