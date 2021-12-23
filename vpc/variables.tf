@@ -1,3 +1,10 @@
+# Tags
+variable "tags" {
+  type = string
+  default = "kd-kankyo"
+  description = "Enter any tags that you want to associate with your VPC. Tags might help you find your VPC more easily after it is created. Separate multiple tags with a comma (,)."
+}
+
 # Region
 variable "region" {
   type = string

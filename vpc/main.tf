@@ -17,6 +17,7 @@ resource ibm_is_vpc vpc {
   default_security_group_name = var.default_security_group_name
   default_network_acl_name = var.default_acl_name
   default_routing_table_name = var.default_routing_table_name
+  tags = var.tags
 }
 
 # Default Security Group Rule
@@ -44,6 +45,7 @@ resource ibm_is_vpc_address_prefix vpc_address_zone1 {
   zone = "${var.region}-1"
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone1_cidr
+  is_default = true
 }
 
 resource ibm_is_vpc_address_prefix vpc_address_zone2 {
@@ -51,6 +53,7 @@ resource ibm_is_vpc_address_prefix vpc_address_zone2 {
   zone = "${var.region}-2"
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone2_cidr
+  is_default = true
 }
 
 resource ibm_is_vpc_address_prefix vpc_address_zone3 {
@@ -58,6 +61,7 @@ resource ibm_is_vpc_address_prefix vpc_address_zone3 {
   zone = "${var.region}-3"
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone3_cidr
+  is_default = true
 }
 
 
