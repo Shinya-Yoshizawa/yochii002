@@ -29,7 +29,6 @@ resource ibm_is_security_group_rule sg_rule_tcp22 {
     port_min = 22
     port_max = 22
   }
-  tags = var.tags
 }
 resource ibm_is_security_group_rule sg_rule_ping {
   group     = ibm_is_vpc.vpc.default_security_group
@@ -68,4 +67,16 @@ resource ibm_is_vpc_address_prefix vpc_address_zone3 {
   is_default = false
 }
 
+# Subnet
+resource "ibm_is_subnet" "vpc_subnet_zone1" {
+  name            = var.subnet.name
+  vpc             = ibm_is_vpc.vpc.id
+  zone            = var.subnet.zone
+  ipv4_cidr_block = var.subnet.cidr
+  routing_table   = ibm_is_vpc.vpc.routing_table  
 
+  timeouts {
+    create = "90m"
+    delete = "30m"
+  }
+}
