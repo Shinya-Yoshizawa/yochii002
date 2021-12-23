@@ -40,21 +40,21 @@ resource ibm_is_security_group_rule sg_rule_ping {
 }
 
 resource ibm_is_vpc_address_prefix vpc_address_zone1 {
-  name = "${var.vpc_name}_zone1_prefix"
+  name = "${var.vpc_name}-zone1-prefix"
   zone = var.region
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone1_cidr
 }
 
 resource ibm_is_vpc_address_prefix vpc_address_zone2 {
-  name = "${var.vpc_name}_zone2_prefix"
+  name = "${var.vpc_name}-zone2-prefix"
   zone = var.region
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone2_cidr
 }
 
 resource ibm_is_vpc_address_prefix vpc_address_zone3 {
-  name = "${var.vpc_name}_zone3_prefix"
+  name = "${var.vpc_name}-zone3-prefix"
   zone = var.region
   vpc  = ibm_is_vpc.vpc.id
   cidr = var.zone3_cidr
