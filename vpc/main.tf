@@ -15,17 +15,12 @@ resource ibm_is_vpc vpc {
   resource_group = data.ibm_resource_group.resource_group.id
   classic_access = var.classic_access
   default_security_group_name = var.default_security_group_name
+  default_network_acl_name = var.default_acl_name
+  default_routing_table_name = var.default_routing_table_name
 }
-
-# Default Security Group
-#resource ibm_is_security_group sg_def {
-#  name = var.default_security_group_name
-#  vpc  = ibm_is_vpc.vpc.id
-#}
 
 # Default Security Group Rule
 resource ibm_is_security_group_rule sg_rule_tcp22 {
-#  group     = ibm_is_security_group.sg_def.id
   group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
   remote    = "0.0.0.0/0"
@@ -35,7 +30,6 @@ resource ibm_is_security_group_rule sg_rule_tcp22 {
   }
 }
 resource ibm_is_security_group_rule sg_rule_ping {
-#  group     = ibm_is_security_group.sg_def.id
   group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
   remote    = "0.0.0.0/0"
@@ -44,8 +38,26 @@ resource ibm_is_security_group_rule sg_rule_ping {
     code = 0
   }
 }
-#resource ibm_is_security_group_rule sg_rule_egress {
-#  group     = ibm_is_security_group.sg_def.id
-#  direction = "outbound"
-#  remote    = "0.0.0.0/0"
-#}
+
+resource ibm_is_vpc_address_prefix vpc_address_zone1 {
+  name = var.vpc_name && "_zone1_prefix"
+  zone = var.region
+  vpc  = ibm_is_vpc.vpc.id
+  cidr = var.zone1_cidr
+}
+
+resource ibm_is_vpc_address_prefix vpc_address_zone2 {
+  name = var.vpc_name && "_zone2_prefix"
+  zone = var.region
+  vpc  = ibm_is_vpc.vpc.id
+  cidr = var.zone2_cidr
+}
+
+resource ibm_is_vpc_address_prefix vpc_address_zone3 {
+  name = var.vpc_name && "_zone3_prefix"
+  zone = var.region
+  vpc  = ibm_is_vpc.vpc.id
+  cidr = var.zone3_cidr
+}
+
+

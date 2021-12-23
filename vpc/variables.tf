@@ -10,10 +10,22 @@ variable "vpc_name" {
   default = "dev-kd-jp-osa-vpc-01"
 }
 
-# Security Group
+# Default Security Group Name
 variable "default_security_group_name" {
   type = string
   default = "dev-kd-jp-osa-sg-default"
+}
+
+# Default ACL Name
+variable "default_acl_name" {
+  type = string
+  default = "dev-kd-jp-osa-acl-default"
+}
+
+# Default Routing Table Name
+variable "default_routing_table_name" {
+  type = string
+  default = "dev-kd-jp-osa-routing-default"
 }
 
 # Resource Group
@@ -36,3 +48,23 @@ variable classic_access {
   type        = bool
   default     = false
 }
+
+# ZONE1 PREFIX
+variable zone1_cidr {
+    type        = string
+    default     = "10.248.0.0/18"
+}
+
+# ZONE2 PREFIX
+variable zone2_cidr {
+    type        = string
+    default     = "10.248.64.0/18"
+}
+
+# ZONE3 PREFIX
+variable zone3_cidr {
+    type        = string
+    default     = "10.248.128.0/18"
+}
+
+
