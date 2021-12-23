@@ -17,15 +17,32 @@ resource ibm_is_vpc vpc {
 }
 
 # Default Security Group
-resource ibm_is_security_group_rule default_vpc_rule {
-  group     = ibm_is_vpc.vpc.default_security_group
+resource ibm_is_security_group sg_def {
+  name = var.default_security_group_name
+  vpc  = ibm_is_vpc.vpc.id
+}
+
+# Default Security Group Rule
+resource ibm_is_security_group_rule sg_rule_tcp22 {
+  group     = ibm_is_security_group.sg_def.id
   direction = "inbound"
   remote    = "0.0.0.0/0"
-  name = "ssh"
-  dynamic tcp {
-    content {
-      port_min = 22
-      port_max = 22
-    }
+  tcp {
+    port_min = 22
+    port_max = 22
   }
+}
+resource ibm_is_security_group_rule sg_rule_ping {
+  group     = ibm_is_security_group.sg_def.id
+  direction = "inbound"
+  remote    = "0.0.0.0/0"
+  icmp {
+    type = 8
+    code = 0
+  }
+}
+resource ibm_is_security_group_rule sg_rule_egress {
+  group     = ibm_is_security_group.sg_def.id
+  direction = "egress"
+  remote    = "0.0.0.0/0"
 }

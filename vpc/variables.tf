@@ -10,8 +10,14 @@ variable "vpc_name" {
   default = "dev-kd-jp-osa-vpc-01"
 }
 
+# Security Group
+variable "default_security_group_name" {
+  type = string
+  default = "dev-kd-jp-osa-sg-default"
+}
+
 # Resource Group
-variable resource_group {
+variable "resource_group" {
     description = "Name of resource group where all infrastructure will be provisioned"
     type        = string
     default = "dev-customer-direct"
