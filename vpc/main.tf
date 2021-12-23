@@ -17,15 +17,15 @@ resource ibm_is_vpc vpc {
 }
 
 # Default Security Group
-#resource ibm_is_security_group_rule default_vpc_rule {
-#  group     = ibm_is_vpc.vpc.default_security_group
-#  direction = "inbound"
-#  remote    = 0.0.0.0/0
-#  name = "ssh"
-#  dynamic tcp {
-#    content {
-#      port_min = 22
-#      port_max = 22
-#    }
-#  }
-#}
+resource ibm_is_security_group_rule default_vpc_rule {
+  group     = ibm_is_vpc.vpc.default_security_group
+  direction = "inbound"
+  remote    = "0.0.0.0/0"
+  name = "ssh"
+  dynamic tcp {
+    content {
+      port_min = 22
+      port_max = 22
+    }
+  }
+}
