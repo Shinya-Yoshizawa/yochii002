@@ -87,7 +87,7 @@ variable zone3_cidr {
 }
 
 # ZONE1 Subnet
-variable subnet {
+variable subnets {
     type        = list(map(string))
     default     = [
       {

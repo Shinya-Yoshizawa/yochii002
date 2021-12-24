@@ -69,20 +69,14 @@ resource ibm_is_vpc_address_prefix vpc_address_zone3 {
 
 # Subnet
 resource ibm_is_subnet vpc_subnet_zone {
-#  count = "${var.subnet[*]["zone"] == ${var.region}-1 ? 1 : 0}"
 #  depends_on      = [
 #    ibm_is_vpc_address_prefix.vpc_address_zone1
 #  ]
-  dynamic "snet" {
-    for_each = var.subnet
-    content {
-      name            = snet.value["name"]
-      zone            = snet.value["zone"]
-      ipv4_cidr_block = snet.value["cidr"]
-    }
-  }
   vpc             = ibm_is_vpc.vpc.id
   resource_group  = data.ibm_resource_group.resource_group.id
+  name            = var.subnets[*].name
+  zone            = var.subnets[*].zone
+  ipv4_cidr_block = var.subnets[*].cidr
 }
 
 
