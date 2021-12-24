@@ -65,13 +65,7 @@ variable sg_add_inbound_rules_icmp {
         code = 0
       },
     ]
-    description = "[
-      {
-        remote = "0.0.0.0/0"
-        type = 8
-        code = 0
-      },
-    ]"
+    description = "[{remote = "0.0.0.0/0" type = 8 code = 8},]"
 }
 
 variable sg_add_inbound_rules_tcp {
@@ -83,25 +77,13 @@ variable sg_add_inbound_rules_tcp {
         port_max = 22
       },
     ]
-    description = "[
-      {
-        remote = "0.0.0.0/0"
-        port_min = 22
-        port_max = 22
-      },
-    ]"
+    description = "[{remote = "0.0.0.0/0" port_min = 22 port_max = 22},]"
 }
 
 variable sg_add_inbound_rules_udp {
     type        = list(map(string))
     default     = [{}]
-    description = "[
-      {
-        remote = "0.0.0.0/0"
-        port_min = 123
-        port_max = 123
-      },
-    ]"
+    description = "[{remote = "0.0.0.0/0" port_min = 162 port_max = 162},]"
 }
 
 
