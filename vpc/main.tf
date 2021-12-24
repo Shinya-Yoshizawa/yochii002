@@ -74,9 +74,9 @@ resource ibm_is_subnet vpc_subnet_zone {
 #  ]
   vpc             = ibm_is_vpc.vpc.id
   resource_group  = data.ibm_resource_group.resource_group.id
-  name            = var.subnets[*]["name"]
-  zone            = var.subnets[*]["zone"]
-  ipv4_cidr_block = var.subnets[*]["cidr"]
+  name            = var.subnets[*].value["name"]
+  zone            = var.subnets[*].value["zone"]
+  ipv4_cidr_block = var.subnets[*].value["cidr"]
 }
 
 
