@@ -82,7 +82,7 @@ variable sg_add_inbound_rules_tcp {
 
 variable sg_add_inbound_rules_udp {
     type        = list(map(string))
-    default     = [{}]
+    default     = []
     description = "[{remote = "0.0.0.0/0" port_min = 162 port_max = 162},]"
 }
 
