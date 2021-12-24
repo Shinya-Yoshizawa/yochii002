@@ -91,19 +91,34 @@ variable subnets {
     type        = list(map(string))
     default     = [
       {
-        "name" = "subnet1"
+        "name" = "dev-kd-jp-osa-vpc-subnet11"
         "zone" = "jp-osa-1"
         "cidr" = "10.248.1.0/24"
       },
       {
-        "name" = "subnet2"
+        "name" = "dev-kd-jp-osa-vpc-subnet12"
         "zone" = "jp-osa-2"
         "cidr" = "10.248.65.0/24"
       },
       {
-        "name" = "subnet3"
+        "name" = "dev-kd-jp-osa-vpc-subnet13"
         "zone" = "jp-osa-3"
         "cidr" = "10.248.129.0/24"
+      },
+      {
+        "name" = "dev-kd-jp-osa-vpc-subnet21"
+        "zone" = "jp-osa-1"
+        "cidr" = "10.248.2.0/24"
+      },
+      {
+        "name" = "dev-kd-jp-osa-vpc-subnet22"
+        "zone" = "jp-osa-2"
+        "cidr" = "10.248.66.0/24"
+      },
+      {
+        "name" = "dev-kd-jp-osa-vpc-subnet23"
+        "zone" = "jp-osa-3"
+        "cidr" = "10.248.130.0/24"
       },
     ]
 }
