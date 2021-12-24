@@ -72,11 +72,12 @@ resource ibm_is_subnet vpc_subnet_zone {
 #  depends_on      = [
 #    ibm_is_vpc_address_prefix.vpc_address_zone1
 #  ]
+  count           = length(var.subnets) 
   vpc             = ibm_is_vpc.vpc.id
   resource_group  = data.ibm_resource_group.resource_group.id
-  name            = var.subnets[*].value["name"]
-  zone            = var.subnets[*].value["zone"]
-  ipv4_cidr_block = var.subnets[*].value["cidr"]
+  name            = var.subnets[count.index].name
+  zone            = var.subnets[count.index].zone
+  ipv4_cidr_block = var.subnets[count.index].cidr
 }
 
 
