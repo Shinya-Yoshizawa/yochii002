@@ -88,10 +88,22 @@ variable zone3_cidr {
 
 # ZONE1 Subnet
 variable subnet {
-    type        = map
-    default     = {
-      "name" = "subnet1"
-      "zone" = "jp-osa-1"
-      "cidr" = "10.248.1.0/24"
+    type        = list(map)
+    default     = { 
+      {
+        "name" = "subnet1"
+        "zone" = "jp-osa-1"
+        "cidr" = "10.248.1.0/24"
+      },
+      {
+        "name" = "subnet2"
+        "zone" = "jp-osa-2"
+        "cidr" = "10.248.65.0/24"
+      },
+      {
+        "name" = "subnet3"
+        "zone" = "jp-osa-3"
+        "cidr" = "10.248.129.0/24"
+      },
     }
 }
