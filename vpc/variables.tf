@@ -132,21 +132,6 @@ variable subnets {
         "name" = "dev-kd-jp-osa-vpc-subnet13"
         "zone" = "jp-osa-3"
         "cidr" = "10.248.129.0/24"
-      },
-      {
-        "name" = "dev-kd-jp-osa-vpc-subnet21"
-        "zone" = "jp-osa-1"
-        "cidr" = "10.248.2.0/24"
-      },
-      {
-        "name" = "dev-kd-jp-osa-vpc-subnet22"
-        "zone" = "jp-osa-2"
-        "cidr" = "10.248.66.0/24"
-      },
-      {
-        "name" = "dev-kd-jp-osa-vpc-subnet23"
-        "zone" = "jp-osa-3"
-        "cidr" = "10.248.130.0/24"
       }
     ]
     description = "When typing, paste from the text. A line feed code is required. name : Subnet name. zone : Zone name. cidr : Cidr."
