@@ -69,14 +69,17 @@ resource ibm_is_vpc_address_prefix vpc_address_zone3 {
 
 # Subnet
 resource "ibm_is_subnet" "vpc_subnet_zone1" {
+  depends_on      = [
+    ibm_is_vpc_address_prefix.vpc_address_zone1
+  ]
   name            = var.subnet["name"]
   vpc             = ibm_is_vpc.vpc.id
   zone            = var.subnet["zone"]
   ipv4_cidr_block = var.subnet["cidr"]
-  routing_table   = ibm_is_vpc.vpc.default_routing_table  
+#  routing_table   = ibm_is_vpc.vpc.default_routing_table  
 
-  timeouts {
-    create = "90m"
-    delete = "30m"
-  }
+#  timeouts {
+#    create = "90m"
+#    delete = "30m"
+#  }
 }
