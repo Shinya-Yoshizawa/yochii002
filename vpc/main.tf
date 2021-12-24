@@ -21,22 +21,58 @@ resource ibm_is_vpc vpc {
 }
 
 # Default Security Group Rule
-resource ibm_is_security_group_rule sg_rule_tcp22 {
+#resource ibm_is_security_group_rule sg_rule_tcp22 {
+#  group     = ibm_is_vpc.vpc.default_security_group
+#  direction = "inbound"
+#  remote    = "0.0.0.0/0"
+#  tcp {
+#    port_min = 22
+#    port_max = 22
+#  }
+#}
+#resource ibm_is_security_group_rule sg_rule_ping {
+#  group     = ibm_is_vpc.vpc.default_security_group
+#  direction = "inbound"
+#  remote    = "0.0.0.0/0"
+#  icmp {
+#    type = 8
+#    code = 0
+#  }
+#}
+
+# Security Group Rules for ICMP
+resource ibm_is_security_group_rule sg_rules_icmp {
+  count     = length(var.sg_add_inbound_rules_icmp) 
   group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
-  remote    = "0.0.0.0/0"
-  tcp {
-    port_min = 22
-    port_max = 22
+  remote    = var.sg_add_inbound_rules_icmp[count.index].remote
+  icmp {
+    type = var.sg_add_inbound_rules_icmp[count.index].type
+    code = var.sg_add_inbound_rules_icmp[count.index].code
   }
 }
-resource ibm_is_security_group_rule sg_rule_ping {
+
+# Security Group Rules for TCP
+resource ibm_is_security_group_rule sg_rules_tcp {
+  count     = length(var.sg_add_inbound_rules_tcp) 
   group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
-  remote    = "0.0.0.0/0"
-  icmp {
-    type = 8
-    code = 0
+  remote    = var.sg_add_inbound_rules_tcp[count.index].remote
+  tcp {
+    port_min = var.sg_add_inbound_rules_tcp[count.index].port_min
+    port_max = var.sg_add_inbound_rules_tcp[count.index].port_max
+  }
+}
+
+# Security Group Rules for UDP
+resource ibm_is_security_group_rule sg_rules_udp {
+  count     = length(var.sg_add_inbound_rules_udp) 
+  group     = ibm_is_vpc.vpc.default_security_group
+  direction = "inbound"
+  remote    = var.sg_add_inbound_rules_udp[count.index].remote
+  tcp {
+    port_min = var.sg_add_inbound_rules_udp[count.index].port_min
+    port_max = var.sg_add_inbound_rules_udp[count.index].port_max
   }
 }
 
@@ -69,9 +105,6 @@ resource ibm_is_vpc_address_prefix vpc_address_zone3 {
 
 # Subnet
 resource ibm_is_subnet vpc_subnet_zone {
-#  depends_on      = [
-#    ibm_is_vpc_address_prefix.vpc_address_zone1
-#  ]
   count           = length(var.subnets) 
   vpc             = ibm_is_vpc.vpc.id
   resource_group  = data.ibm_resource_group.resource_group.id

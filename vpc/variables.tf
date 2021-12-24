@@ -56,6 +56,56 @@ variable classic_access {
   default     = false
 }
 
+variable sg_add_inbound_rules_icmp {
+    type        = list(map(string))
+    default     = [
+      {
+        remote = "0.0.0.0/0"
+        type = 8
+        code = 0
+      },
+    ]
+    description = "[
+      {
+        remote = "0.0.0.0/0"
+        type = 8
+        code = 0
+      },
+    ]"
+}
+
+variable sg_add_inbound_rules_tcp {
+    type        = list(map(string))
+    default     = [
+      {
+        remote = "0.0.0.0/0"
+        port_min = 22
+        port_max = 22
+      },
+    ]
+    description = "[
+      {
+        remote = "0.0.0.0/0"
+        port_min = 22
+        port_max = 22
+      },
+    ]"
+}
+
+variable sg_add_inbound_rules_udp {
+    type        = list(map(string))
+    default     = []
+    description = "[
+      {
+        remote = "0.0.0.0/0"
+        port_min = 123
+        port_max = 123
+      },
+    ]"
+}
+
+
+
 # ZONE1 PREFIX
 variable create_zone1_prefix {
     type        = bool
@@ -86,7 +136,7 @@ variable zone3_cidr {
     default     = "10.248.128.0/18"
 }
 
-# ZONE1 Subnet
+# Subnet
 variable subnets {
     type        = list(map(string))
     default     = [
