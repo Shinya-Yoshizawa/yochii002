@@ -64,8 +64,9 @@ variable sg_add_inbound_rules_icmp {
         remote = "0.0.0.0/0"
         type = "8"
         code = "0"
-      },
+      }
     ]
+    description = "When typing, paste from the text. A line feed code is required. remote : Source network. type : Icmp type. code : Icmp code."
 }
 
 # Security Group Inbound Rules for TCP
@@ -76,68 +77,42 @@ variable sg_add_inbound_rules_tcp {
         remote = "0.0.0.0/0"
         port_min = "22"
         port_max = "22"
-      },
+      }
     ]
+    description = "When typing, paste from the text. A line feed code is required. remote : Source network. port_min : Minimum port value. port_max : Maximum port value."
 }
 
 # Security Group Inbound Rules for UDP
 variable sg_add_inbound_rules_udp {
     type        = list(map(string))
     default     = []
+    description = "When typing, paste from the text. A line feed code is required. remote : Source network. port_min : Minimum port value. port_max : Maximum port value."
 }
 
 
 # Prefix
 variable prefix-list {
     type        = list(map(string))
-    default     = [
-      {
-        zone = "jp-osa-1"
-        cidr = "10.248.0.0/18"
-        default = "false"
-      },
-      {
-        zone = "jp-osa-2"
-        cidr = "10.248.64.0/18"
-        default = "false"
-      },
-      {
-        zone = "jp-osa-3"
-        cidr = "10.248.128.0/18"
-        default = "false"
-      },
-    ]
+    default     = []
+#    default     = [
+#      {
+#        zone = "jp-osa-1"
+#        cidr = "10.248.0.0/18"
+#        default = "false"
+#      },
+#      {
+#        zone = "jp-osa-2"
+#        cidr = "10.248.64.0/18"
+#        default = "false"
+#      },
+#      {
+#        zone = "jp-osa-3"
+#        cidr = "10.248.128.0/18"
+#        default = "false"
+#      }
+#    ]
+    description = "When typing, paste from the text. A line feed code is required. zone : Zone name. cidr : Cidr. default : true or false."
 }
-
-# ZONE1 PREFIX
-#variable create_zone1_prefix {
-#    type        = bool
-#    default     = false
-#}
-#variable zone1_cidr {
-#    type        = string
-#    default     = "10.248.0.0/18"
-#}
-
-# ZONE2 PREFIX
-#variable create_zone2_prefix {
-#    type        = bool
-#    default     = false
-#}
-#variable zone2_cidr {
-#    type        = string
-#    default     = "10.248.64.0/18"
-#}
-
-# ZONE3 PREFIX
-#variable create_zone3_prefix {
-#    type        = bool
-#    default     = false
-#}
-#variable zone3_cidr {
-#    type        = string
-#    default     = "10.248.128.0/18"
-#}
 
 # Subnet
 variable subnets {
@@ -172,6 +147,7 @@ variable subnets {
         "name" = "dev-kd-jp-osa-vpc-subnet23"
         "zone" = "jp-osa-3"
         "cidr" = "10.248.130.0/24"
-      },
+      }
     ]
+    description = "When typing, paste from the text. A line feed code is required. name : Subnet name. zone : Zone name. cidr : Cidr."
 }
