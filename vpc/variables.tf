@@ -88,7 +88,7 @@ variable zone3_cidr {
 
 # ZONE1 Subnet
 variable subnet {
-    type        = list(map)
+    type        = list(string)
     default     = { 
       {
         "name" = "subnet1"
