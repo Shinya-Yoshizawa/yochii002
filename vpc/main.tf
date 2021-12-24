@@ -66,33 +66,6 @@ resource ibm_is_vpc_address_prefix vpc_address_prefix {
   is_default = var.prefix-list[count.index].default
 }
 
-#resource ibm_is_vpc_address_prefix vpc_address_zone1 {
-#  count = "${var.create_zone1_prefix == true ? 1 : 0}"
-#  name = "${var.vpc_name}-zone1-prefix"
-#  zone = "${var.region}-1"
-#  vpc  = ibm_is_vpc.vpc.id
-#  cidr = var.zone1_cidr
-#  is_default = false
-#}
-
-#resource ibm_is_vpc_address_prefix vpc_address_zone2 {
-#  count = "${var.create_zone2_prefix == true ? 1 : 0}"
-#  name = "${var.vpc_name}-zone2-prefix"
-#  zone = "${var.region}-2"
-#  vpc  = ibm_is_vpc.vpc.id
-#  cidr = var.zone2_cidr
-#  is_default = false
-#}
-
-#resource ibm_is_vpc_address_prefix vpc_address_zone3 {
-#  count = "${var.create_zone3_prefix == true ? 1 : 0}"
-#  name = "${var.vpc_name}-zone3-prefix"
-#  zone = "${var.region}-3"
-#  vpc  = ibm_is_vpc.vpc.id
-#  cidr = var.zone3_cidr
-#  is_default = false
-#}
-
 # Subnet
 resource ibm_is_subnet vpc_subnet_zone {
   count           = length(var.subnets) 
@@ -102,6 +75,4 @@ resource ibm_is_subnet vpc_subnet_zone {
   zone            = var.subnets[count.index].zone
   ipv4_cidr_block = var.subnets[count.index].cidr
 }
-
-
 
