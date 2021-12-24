@@ -35,14 +35,14 @@ variable "default_routing_table_name" {
   default = "dev-kd-jp-osa-routing-default"
 }
 
-# Resource Group
+# Resource Group Name
 variable "resource_group" {
     description = "Name of resource group where all infrastructure will be provisioned"
     type        = string
     default = "dev-customer-direct"
 }
 
-# Prefix
+# Prefix Name
 variable prefix {
     description = "A unique identifier need to provision resources. Must begin with a letter"
     type        = string
@@ -56,6 +56,7 @@ variable classic_access {
   default     = false
 }
 
+# Security Group Inbound Rules for ICMP
 variable sg_add_inbound_rules_icmp {
     type        = list(map(string))
     default     = [
@@ -67,6 +68,7 @@ variable sg_add_inbound_rules_icmp {
     ]
 }
 
+# Security Group Inbound Rules for TCP
 variable sg_add_inbound_rules_tcp {
     type        = list(map(string))
     default     = [
@@ -78,42 +80,64 @@ variable sg_add_inbound_rules_tcp {
     ]
 }
 
+# Security Group Inbound Rules for UDP
 variable sg_add_inbound_rules_udp {
     type        = list(map(string))
     default     = []
 }
 
 
+# Prefix
+variable prefix-list {
+    type        = list(map(string))
+    default     = [
+      {
+        zone = "jp-osa-1"
+        cidr = "10.248.0.0/18"
+        default = "false"
+      },
+      {
+        zone = "jp-osa-2"
+        cidr = "10.248.64.0/18"
+        default = "false"
+      },
+      {
+        zone = "jp-osa-3"
+        cidr = "10.248.128.0/18"
+        default = "false"
+      },
+    ]
+}
 
 # ZONE1 PREFIX
-variable create_zone1_prefix {
-    type        = bool
-    default     = false
-}
-variable zone1_cidr {
-    type        = string
-    default     = "10.248.0.0/18"
-}
+#variable create_zone1_prefix {
+#    type        = bool
+#    default     = false
+#}
+#variable zone1_cidr {
+#    type        = string
+#    default     = "10.248.0.0/18"
+#}
 
 # ZONE2 PREFIX
-variable create_zone2_prefix {
-    type        = bool
-    default     = false
-}
-variable zone2_cidr {
-    type        = string
-    default     = "10.248.64.0/18"
-}
+#variable create_zone2_prefix {
+#    type        = bool
+#    default     = false
+#}
+#variable zone2_cidr {
+#    type        = string
+#    default     = "10.248.64.0/18"
+#}
 
 # ZONE3 PREFIX
-variable create_zone3_prefix {
-    type        = bool
-    default     = false
-}
-variable zone3_cidr {
-    type        = string
-    default     = "10.248.128.0/18"
-}
+#variable create_zone3_prefix {
+#    type        = bool
+#    default     = false
+#}
+#variable zone3_cidr {
+#    type        = string
+#    default     = "10.248.128.0/18"
+#}
 
 # Subnet
 variable subnets {
